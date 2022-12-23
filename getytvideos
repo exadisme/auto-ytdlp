@@ -1,0 +1,88 @@
+#!/bin/bash
+# Letting you know it's running so you don't wonder why your internet is being used.
+notify-send --expire-time=10000 "Youtube Auto Download" "Service started.\n If new episodes are downloaded, you will be notified."
+
+# Set the YouTube channel URL
+#
+# Download date for dateafter option. Will check for any new episodes within the last 5 days
+# This number can be changed to suit your needs.
+let download_date="$(date -d  '5 days ago' '+%Y%m%d')"
+cd /home/adam/Videos/YouTube
+
+
+# Array of channel URLs.
+channels=( 
+# Philip DeFranco
+   "https://www.youtube.com/playlist?list=PLHcsGizlfLMWpSg7i0b9wnUyEZWI-25N3"
+# CinnamonToastKen
+   "https://www.youtube.com/@CinnamonToastKen/videos"
+# PewDiePie
+   "https://www.youtube.com/@PewDiePie/videos"
+# Hasan Piker
+   "https://www.youtube.com/@HasanAbi/videos" 
+# First We Feast
+   "https://www.youtube.com/@FirstWeFeast/videos"
+# The Wan Show
+   "https://www.youtube.com/watch?v=Luz82RG5PqA&list=PL8mG-RkN2uTw7PhlnAr4pZZz2QubIbujH"
+)
+
+channel_names=(
+   "Philip DeFranco"
+   "Cinnamon Toast Ken"
+   "PewDiePie"
+   "HasanAbi"
+   "First We Feast"
+   "The WAN Show"
+)
+
+# Array of directories of the folders the videos will be saved in.
+# Must be in the same order as the Array of channel URLs or videos will
+# be placed in the wrong folders
+channel_dirs=(
+   "/home/adam/Videos/YouTube/Philip_DeFranco"
+   "/home/adam/Videos/YouTube/CinnamonToastKen"
+   "/home/adam/Videos/YouTube/PewDiePie"
+   "/home/adam/Videos/YouTube/HasanAbi"
+   "/home/adam/Videos/YouTube/First_We_Feast"
+   "/home/adam/Videos/YouTube/The_WAN_Show"
+)
+
+# Getting the original amount of files in each directory and populating
+# the array with the number for each.
+dir_size_orig=(
+   "0"
+   "0"
+   "0"
+   "0"
+   "0"
+   "0"
+)
+
+for ((i=0; i<${#channels[@]}; i++)); do
+   dir_size_orig[$i]=$(ls -l ${channel_dirs[$i]} | grep -c '^-')
+done
+
+
+# Directory size change.
+dir_size_diff=(
+   "0"
+   "0"
+   "0"
+   "0"
+   "0"
+   "0"
+)
+
+# Records the number of files in eacho directory prior to downloading.
+
+# For each of the channels added, this downloads the latest 10 videos for the 
+# date range specified, calculates the change in number of files, and notifies 
+# of the number of episodes updated.
+for ((i=0; i<${#channels[@]}; i++)); do
+   cd ${channel_dirs[$i]}
+   yt-dlp --download-archive .archive --dateafter $download_date ${channels[$i]} --playlist-end 10 
+   dir_size_diff[$i]=$(expr $(ls -l ${channel_dirs[$i]} | grep -c '^-') - ${dir_size_orig[$i]})
+   if [[ ${dir_size_diff[$i]} -gt 0 ]]; then
+      notify-send --expire-time=20000 "${channel_names[$i]}" "${dir_size_diff[$i]} episodes downloaded"
+   fi
+done
