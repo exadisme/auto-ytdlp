@@ -1,4 +1,6 @@
 #!/bin/bash
+# Makes sure the script is operating in the proper directory.
+cd "$(dirname "$0")"
 
 # sourcing config files which contain the arrays to make it easier to write permanent changes.
 source channel_dirs
