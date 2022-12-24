@@ -15,7 +15,7 @@ Currently, it is likely easy to break but I will be updating this to make it mor
 This script requires yt-dlp you can install for your distro or get it here: https://github.com/yt-dlp/yt-dlp
 
 
-```git clone https://github.com/exadisme/yt-dlp-auto.git```
+```git clone https://github.com/exadisme/auto-ytdlp.git```
 
 
 Place somewhere within your path. All files need to be together for this to work.
