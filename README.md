@@ -15,7 +15,7 @@ Place somewhere within your path.
 
 Make it executable: chmod +x auto-ytdlp
 
-
+```
 Usage:
      getytvideos                                 Will check for youtube video updates and download them.
      getytvideos [options]
@@ -25,3 +25,4 @@ Options:
      -l                                          List all currently added channels.
      -a URL SaveDirectory Name of the channel    Add a channel or playlist.
      -d <number>                                 Delete a channel. Get the number from list.
+```
