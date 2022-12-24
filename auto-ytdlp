@@ -7,6 +7,9 @@ source channel_dirs
 source channel_names
 source channels
 
+# This number can be changed to suit your needs.
+let download_date="$(date -d  '5 days ago' '+%Y%m%d')"
+
 # Capture arguments
 declare -g -a args=${@:1}
 export args

@@ -3,6 +3,3 @@
 declare -g -a channels=( 
 )
 export channels
-
-# This number can be changed to suit your needs.
-let download_date="$(date -d  '5 days ago' '+%Y%m%d')"
