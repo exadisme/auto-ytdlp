@@ -1,5 +1,6 @@
 #!/bin/bash
 # Array of channel URLs.
 declare -g -a channels=( 
+   "testingURL"
 )
 export channels

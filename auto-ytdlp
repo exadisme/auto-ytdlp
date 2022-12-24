@@ -45,6 +45,12 @@ function helpmenu() {
 function add_channel() {
    first=$(echo $args | awk -v var="$args" '{print $2}' )
    second=$(echo $args | awk -v var="$args" '{print $3}' )
+   if [ ! -d $second ]; then
+      echo "Warning directory $second does not exist."
+      echo "Creating directory: $second"
+      mkdir -p $second
+   fi
+   # directory does not exist
    third=$(echo $args | cut -d' ' -f4-)
    sed -i -e "4i\\   \"$first\"" channels
    sed -i -e "4i\\   \"$second\"" channel_dirs
@@ -53,19 +59,29 @@ function add_channel() {
 
 # function for deleting channels
 function del_channel() {
-   delnum=$(echo $args | awk -v var="$args" '{print $2}' )
-   delnum=$(expr $delnum + 3)
-   sed -i -e "${delnum}d" channels
-   sed -i -e "${delnum}d" channel_names
-   sed -i -e "${delnum}d" channel_dirs
+   delnum=$(echo $args | awk -v var="$args" '{print $2}')
+   any_chans=$(wc -l channel_names | awk '{print $1}')
+   numb=8
+   re='^[0-'$numb']+$'
+   if ! [[ $delnum =~ $re ]] ; then
+      echo "error: $delnum is not a number" >&2; exit 1
+   elif [ $any_chans -le 5 ];
+   then
+      echo "error: no channels to delete"
+   else
+      delnum=$(expr $delnum + 3)
+      sed -i -e "${delnum}d" channels
+      sed -i -e "${delnum}d" channel_names
+      sed -i -e "${delnum}d" channel_dirs
+   fi
 }
 
 # Funtion for listing channels
 function list_channels() {
    for ((i=0; i<${#channels[@]}; i++)); do
-      echo $(expr $i + 1). "["${channel_names[$i]}"]" 
-      echo "   ""["${channels[$i]}"]" 
-      echo "   ""["${channel_dirs[$i]}"]"
+      echo $(expr $i + 1).  "["${channel_names[$i]}"]" 
+      echo "   ""URL: [${channels[$i]}]"
+      echo "   ""Directory: ["${channel_dirs[$i]}"]"
    done
 }
 
