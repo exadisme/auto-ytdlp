@@ -28,12 +28,12 @@ dir_size_diff=(
 # Funtion that displays the help menu.
 function helpmenu() {
    echo Usage: 
-   echo "    " "getytvideos""                                 Will check for youtube video updates and download them."
-   echo "    " "getytvideos [options]"
+   echo "    " "auto-ytdlp""                                 Will check for youtube video updates and download them."
+   echo "    " "auto-ytdlp [options]"
    echo ""
    echo "Options:"
-   echo "    " "--help""                                      Shows this menu."
-   echo "    " "-l""                                        List all currently added channels."
+   echo "    " "--help""                                     Shows this menu."
+   echo "    " "-l""                                         List all currently added channels."
    echo "    " "-a URL SaveDirectory Name of the channel""   Add a channel or playlist."
    echo "    " "-d <number>""                                Delete a channel. Get the number from list."
 }

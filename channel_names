@@ -1,6 +1,9 @@
 #!/bin/bash
 # Array of channel names
 declare -g -a channel_names=(
+   "The WAN Show"
+   "First We Feast"
+   "HasanAbi"
    "Philip DeFranco"
    "Cinnamon Toast Ken"
    "PewDiePie"

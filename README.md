@@ -25,8 +25,8 @@ Make it executable: ```chmod +x auto-ytdlp```
 
 ```
 Usage:
-     getytvideos                               Will check for youtube video updates and download them.
-     getytvideos [options]
+     auto-ytdlp                               Will check for youtube video updates and download them.
+     auto-ytdlp [options]
 
 Options:
      --help                                    Shows this menu.
