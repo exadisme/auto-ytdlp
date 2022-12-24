@@ -8,11 +8,18 @@ As this script works with arrays, it is important to keep everything in the same
 ## Directions
 
 This script requires yt-dlp you can install for your distro or get it here: https://github.com/yt-dlp/yt-dlp
+
 Download my script.
+
 Place somewhere within your path.
+
 As of right now, edit the script manually.
+
 Add the channel or playlist URL, surrounded by quotes, in the channels array.
+
 Add what you want the channel names to be, surrounded by quotes, in the channel_names array.
+
 Add the directories you want the channels to be saved in, surrounded by quotes, in the channel_dirs array.
+
 It is very important that the channel URL, channel name and download directories remain in the same order or the script will not function as intended.
 
