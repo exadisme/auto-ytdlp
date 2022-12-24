@@ -13,7 +13,7 @@ Download my script.
 
 Place somewhere within your path.
 
-Make it executable: chmod +x auto-ytdlp
+Make it executable: ```chmod +x auto-ytdlp```
 
 ```
 Usage:
