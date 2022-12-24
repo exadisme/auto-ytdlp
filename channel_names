@@ -1,6 +1,5 @@
 #!/bin/bash
 # Array of channel names
 declare -g -a channel_names=(
-   "Testing out a feature"
 )
 export channel_names

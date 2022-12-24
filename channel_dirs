@@ -1,6 +1,5 @@
 #!/bin/bash
 # Array of directories of the folders the videos will be saved in.
 declare -g -a channel_dirs=(
-   "/home/adam/gitrepos/auto-ytdlp/new_dir"
 )
 export channel_dirs
