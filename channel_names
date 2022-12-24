@@ -1,0 +1,8 @@
+#!/bin/bash
+# Array of channel names
+declare -g -a channel_names=(
+   "Philip DeFranco"
+   "Cinnamon Toast Ken"
+   "PewDiePie"
+)
+export channel_names

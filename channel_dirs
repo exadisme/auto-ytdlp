@@ -1,0 +1,8 @@
+#!/bin/bash
+# Array of directories of the folders the videos will be saved in.
+declare -g -a channel_dirs=(
+   "/home/adam/Videos/YouTube/Philip_DeFranco"
+   "/home/adam/Videos/YouTube/CinnamonToastKen"
+   "/home/adam/Videos/YouTube/PewDiePie"
+)
+export channel_dirs

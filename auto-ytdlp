@@ -1,0 +1,103 @@
+#!/bin/bash
+
+# sourcing config files which contain the arrays to make it easier to write permanent changes.
+source channel_dirs
+source channel_names
+source channels
+
+# Capture arguments
+declare -g -a args=${@:1}
+export args
+
+# Getting the original amount of files in each directory and populating
+# the array with the number for each.
+dir_size_orig=(
+)
+
+for ((i=0; i<${#channels[@]}; i++)); do
+   dir_size_orig[$i]=$(ls -l ${channel_dirs[$i]} | grep -c '^-')
+done
+
+
+# Directory size change.
+dir_size_diff=(
+)
+
+# Funtion that displays the help menu.
+function helpmenu() {
+   echo Usage: 
+   echo "    " "getytvideos""                                 Will check for youtube video updates and download them."
+   echo "    " "getytvideos [options]"
+   echo ""
+   echo "Options:"
+   echo "    " "--help""                                      Shows this menu."
+   echo "    " "-l""                                        List all currently added channels."
+   echo "    " "-a URL SaveDirectory Name of the channel""   Add a channel or playlist."
+   echo "    " "-d <number>""                                Delete a channel. Get the number from list."
+}
+
+# Function for adding new channels/playlists
+function add_channel() {
+   first=$(echo $args | awk -v var="$args" '{print $2}' )
+   second=$(echo $args | awk -v var="$args" '{print $3}' )
+   third=$(echo $args | cut -d' ' -f4-)
+   sed -i -e "4i\\   \"$first\"" channels
+   sed -i -e "4i\\   \"$second\"" channel_dirs
+   sed -i -e "4i\\   \"$third\"" channel_names
+}
+
+# function for deleting channels
+function del_channel() {
+   delnum=$(echo $args | awk -v var="$args" '{print $2}' )
+   delnum=$(expr $delnum + 3)
+   sed -i -e "${delnum}d" channels
+   sed -i -e "${delnum}d" channel_names
+   sed -i -e "${delnum}d" channel_dirs
+}
+
+# Funtion for listing channels
+function list_channels() {
+   for ((i=0; i<${#channels[@]}; i++)); do
+      echo $(expr $i + 1). "["${channel_names[$i]}"]" 
+      echo "   ""["${channels[$i]}"]" 
+      echo "   ""["${channel_dirs[$i]}"]"
+   done
+}
+
+
+if [ -n "$1" ]; then
+      if [ $1 = --help ]; then
+         helpmenu
+         exit
+      fi
+      if [ $1 = "-a" ]; then
+         add_channel
+         exit
+      fi
+      if [ $1 = "-d" ]; then
+         del_channel
+         exit
+      fi
+      if [ $1 = "-l" ]; then
+         list_channels
+         exit
+      fi
+
+fi
+
+# Letting you know it's running so you don't wonder why your internet is being used.
+notify-send --expire-time=10000 "Youtube Auto Download" "Checking for new videos.\n If new episodes are downloaded, you will be notified."
+
+# Records the number of files in echo directory prior to downloading.
+
+# For each of the channels added, this downloads the latest 10 videos for the 
+# date range specified, calculates the change in number of files, and notifies 
+# of the number of episodes updated.
+for ((i=0; i<${#channels[@]}; i++)); do
+   cd ${channel_dirs[$i]}
+   yt-dlp --download-archive .archive --dateafter $download_date ${channels[$i]} --playlist-end 10 
+   dir_size_diff[$i]=$(expr $(ls -l ${channel_dirs[$i]} | grep -c '^-') - ${dir_size_orig[$i]})
+   if [[ ${dir_size_diff[$i]} -gt 0 ]]; then
+      notify-send --expire-time=20000 "${channel_names[$i]}" "${dir_size_diff[$i]} episodes downloaded"
+   fi
+done

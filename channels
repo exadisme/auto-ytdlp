@@ -1,0 +1,11 @@
+#!/bin/bash
+# Array of channel URLs.
+declare -g -a channels=( 
+   "https://www.youtube.com/playlist?list=PLHcsGizlfLMWpSg7i0b9wnUyEZWI-25N3"
+   "https://www.youtube.com/@CinnamonToastKen/videos"
+   "https://www.youtube.com/@PewDiePie/videos"
+)
+export channels
+
+# This number can be changed to suit your needs.
+let download_date="$(date -d  '5 days ago' '+%Y%m%d')"

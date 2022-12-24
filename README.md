@@ -13,13 +13,15 @@ Download my script.
 
 Place somewhere within your path.
 
-As of right now, edit the script manually.
+Make it executable: chmod +x auto-ytdlp
 
-Add the channel or playlist URL, surrounded by quotes, in the channels array.
 
-Add what you want the channel names to be, surrounded by quotes, in the channel_names array.
+Usage:
+     getytvideos                                 Will check for youtube video updates and download them.
+     getytvideos [options]
 
-Add the directories you want the channels to be saved in, surrounded by quotes, in the channel_dirs array.
-
-It is very important that the channel URL, channel name and download directories remain in the same order or the script will not function as intended.
-
+Options:
+     --help                                      Shows this menu.
+     -l                                          List all currently added channels.
+     -a URL SaveDirectory Name of the channel    Add a channel or playlist.
+     -d <number>                                 Delete a channel. Get the number from list.
