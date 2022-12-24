@@ -1,12 +1,6 @@
 #!/bin/bash
 # Array of channel URLs.
 declare -g -a channels=( 
-   "https://www.youtube.com/watch?v=Luz82RG5PqA&list=PL8mG-RkN2uTw7PhlnAr4pZZz2QubIbujH"
-   "https://www.youtube.com/@FirstWeFeast/videos"
-   "https://www.youtube.com/@HasanAbi/videos"
-   "https://www.youtube.com/playlist?list=PLHcsGizlfLMWpSg7i0b9wnUyEZWI-25N3"
-   "https://www.youtube.com/@CinnamonToastKen/videos"
-   "https://www.youtube.com/@PewDiePie/videos"
 )
 export channels
 
