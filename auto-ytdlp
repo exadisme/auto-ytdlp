@@ -69,6 +69,8 @@ function del_channel() {
    elif [ $any_chans -le 5 ];
    then
       echo "Error: no channels to delete"
+   elif [ $delnum -le 0 ]; then
+      echo "Error: not a valid option. List options with -l"
    else
       ndelnum=$(expr $delnum + 3)
       if [ $ndelnum -gt $limit ]; then
