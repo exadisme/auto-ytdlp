@@ -17,11 +17,12 @@ This script requires yt-dlp you can install for your distro or get it here: http
 
 ```git clone https://github.com/exadisme/auto-ytdlp.git```
 
-
-Place somewhere within your path. All files need to be together for this to work.
-
+```cd auto-ytdlp```
 
 Make it executable: ```chmod +x auto-ytdlp```
+
+Place files somewhere within your path or add the folder to your path variable. All files need to be together for this to work.
+
 
 ```
 Usage:
