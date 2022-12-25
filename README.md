@@ -68,4 +68,4 @@ Unit=youtube_download.service
 [Install]
 WantedBy=multi-user.target
 ```
-then you could sudo systemctl ```enable youtube_download.service --now```
+then you could ```sudo systemctl enable youtube_download.service --now```
