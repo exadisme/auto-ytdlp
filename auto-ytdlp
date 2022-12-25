@@ -122,7 +122,7 @@ if [ -n "$1" ]; then
 fi
 
 # Letting you know it's running so you don't wonder why your internet is being used.
-notify-send --expire-time=10000 "Youtube Auto Download" "Checking for new videos.\n If new episodes are downloaded, you will be notified."
+notify-send --expire-time=10000 "Youtube Auto Download" "Checking for new videos.\nIf new episodes are downloaded, you will be notified."
 
 # Records the number of files in echo directory prior to downloading.
 
