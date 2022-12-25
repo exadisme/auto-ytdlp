@@ -1,4 +1,8 @@
 #!/bin/bash
+appname="auto-ytdlp"
+ver="0.2"
+license="MIT License Copyright (c) 2022 Adam"
+
 # Makes sure the script is operating in the proper directory.
 cd "$(dirname "$0")"
 
@@ -110,7 +114,11 @@ if [ -n "$1" ]; then
          list_channels
          exit
       fi
-
+      if [ $1 = "-v" ]; then
+         echo $appname $ver 
+         echo $license
+         exit
+      fi
 fi
 
 # Letting you know it's running so you don't wonder why your internet is being used.
