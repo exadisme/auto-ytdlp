@@ -50,13 +50,25 @@ function helpmenu() {
 function add_channel() {
    first=$(echo $args | awk -v var="$args" '{print $2}' )
    second=$(echo $args | awk -v var="$args" '{print $3}' )
+   third=$(echo $args | cut -d' ' -f4-)
+   if [ -z $first ]; then
+      echo "Error: a URL is required"
+      echo "Usage: auto-ytdlp -a URL SaveDirectory Name of the channel"
+      exit
+   elif [ -z $second ]; then
+      echo "Error: a directory is required"
+      echo "Usage: auto-ytdlp -a URL SaveDirectory Name of the channel"
+      exit
+   elif [ -z $third ]; then
+      echo "Error: a name is required"
+      echo "Usage: auto-ytdlp -a URL SaveDirectory Name of the channel"
+      exit
+   fi
    if [ ! -d $second ]; then
-      echo "Warning directory $second does not exist."
+      echo "Warning directory $second does not exist"
       echo "Creating directory: $second"
       mkdir -p $second
    fi
-   # directory does not exist
-   third=$(echo $args | cut -d' ' -f4-)
    sed -i -e "4i\\   \"$first\"" channels
    sed -i -e "4i\\   \"$second\"" channel_dirs
    sed -i -e "4i\\   \"$third\"" channel_names

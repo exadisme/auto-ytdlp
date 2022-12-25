@@ -1,42 +1,44 @@
 #!/bin/bash
 
+# Configurarable options
+
 # Threshold for how old videos should be downloaded. 
 # Will not affect videos you have already downloadedyy
 
-let download_days=5
+download_days=5
 
 
 # How many videos per playlist/channel should be downloaded. 
 # 10 is a safe number.
 # Will not affect videos you have already downloadedyy
 
-let playlist_end=10
+playlist_end=10
 
 
 # If you want to use ffmpeg to convert the video to another format
 # after downloading. This might be a nice feature to impletement in 
 # the future. Not yet working
 
-# let convert_videos="no"
+#convert_videos="no"
 
 
 # The prefered file format of the videos saved. Default is mp4
 # yt-dlp default is webm. Not yet working.
 
-# let prefered_format="mp4"
+#prefered_format="mp4"
 
 
 # Option for downloading subtitles.
 # Not yet working.
 
-#let subtitles="no"
+#subtitles="no"
 
 
 # Option for setting subtitle language. Keep in mine subtitles need
 # to be enabled for this to work.
 # Not yet working.
 
-#let subtitle_language="en"
+#subtitle_language="en"
 
 
 # Option if you want to limit the download rate.
