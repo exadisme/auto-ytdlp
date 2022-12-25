@@ -10,9 +10,10 @@ cd "$(dirname "$0")"
 source channel_dirs
 source channel_names
 source channels
+source config
 
-# This number can be changed to suit your needs.
-let download_date="$(date -d  '5 days ago' '+%Y%m%d')"
+# Number of days to look back for new content.
+let download_date="$(date -d  "$download_days days ago" '+%Y%m%d')"
 
 # Capture arguments
 declare -g -a args=${@:1}
@@ -131,7 +132,7 @@ notify-send --expire-time=10000 "Youtube Auto Download" "Checking for new videos
 # of the number of episodes updated.
 for ((i=0; i<${#channels[@]}; i++)); do
    cd ${channel_dirs[$i]}
-   yt-dlp --download-archive .archive --dateafter $download_date ${channels[$i]} --playlist-end 10 
+   yt-dlp --geo-bypass --download-archive .archive --dateafter $download_date ${channels[$i]} --playlist-end $playlist_end 
    dir_size_diff[$i]=$(expr $(ls -l ${channel_dirs[$i]} | grep -c '^-') - ${dir_size_orig[$i]})
    if [[ ${dir_size_diff[$i]} -gt 0 ]]; then
       notify-send --expire-time=20000 "${channel_names[$i]}" "${dir_size_diff[$i]} episodes downloaded"
