@@ -35,3 +35,35 @@ Options:
      -a URL SaveDirectory Name of the channel  Add a channel or playlist.
      -d <number>                               Delete a channel. Get the number from list.
 ```
+If you wanted to set this up as a service you could create a systemd service with the following options:
+
+```
+[Unit]
+Description=Youtube video downloader script
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /path/to/script/auto-ytdlp
+User=<your username>
+Restart=on-failure
+Environment="DISPLAY=:0" "XAUTHORITY=/home/<your username>/.Xauthority"
+
+[Install]
+WantedBy=multi-user.target
+```
+If you wanted it to run every 2 hours or so, you could also set up a .timer for the service like so:
+```
+[Unit]
+Description=Run my youtube download script every 2 hours.
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=2h
+Unit=youtube_download.service
+
+[Install]
+WantedBy=multi-user.target
+```
+then you could sudo systemctl ```enable youtube_download.service --now```
