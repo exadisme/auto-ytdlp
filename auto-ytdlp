@@ -61,18 +61,23 @@ function add_channel() {
 function del_channel() {
    delnum=$(echo $args | awk -v var="$args" '{print $2}')
    any_chans=$(wc -l channel_names | awk '{print $1}')
+   limit=$(expr $any_chans - 2)
    numb=8
    re='^[0-'$numb']+$'
    if ! [[ $delnum =~ $re ]] ; then
-      echo "error: $delnum is not a number" >&2; exit 1
+      echo "Error: $delnum is not a number" >&2; exit 1
    elif [ $any_chans -le 5 ];
    then
-      echo "error: no channels to delete"
+      echo "Error: no channels to delete"
    else
-      delnum=$(expr $delnum + 3)
-      sed -i -e "${delnum}d" channels
-      sed -i -e "${delnum}d" channel_names
-      sed -i -e "${delnum}d" channel_dirs
+      ndelnum=$(expr $delnum + 3)
+      if [ $ndelnum -gt $limit ]; then
+         echo "Error: choice $delnum does not exist. List options with -l"
+         exit
+      fi
+      sed -i -e "${ndelnum}d" channels
+      sed -i -e "${ndelnum}d" channel_names
+      sed -i -e "${ndelnum}d" channel_dirs
    fi
 }
 
