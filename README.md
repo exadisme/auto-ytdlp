@@ -35,6 +35,8 @@ Options:
      -a URL SaveDirectory Name of the channel  Add a channel or playlist.
      -d <number>                               Delete a channel. Get the number from list.
 ```
+## Running as a service systemd
+
 If you wanted to set this up as a service you could create a systemd service with the following options:
 
 ```
