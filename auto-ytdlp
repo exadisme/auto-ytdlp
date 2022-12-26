@@ -108,7 +108,8 @@ function del_channel() {
             sed -i -e "${ndelnum}d" channel_dirs
             break
          elif [[ $response == "no" || $response == "No" || $response == "n" ]]; then
-            echo "Entry not be deleted."
+            echo ""
+            echo "Entry not deleted."
             break
          fi
       echo "Invalid response. Please enter yes or no. "
