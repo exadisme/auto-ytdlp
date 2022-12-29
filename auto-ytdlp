@@ -69,10 +69,6 @@ function add_channel() {
    for channel in "${channels[@]}"; do
       if [[ "$channel" == "$first" ]]; then
          echo "Channel $first already exists."
-         echo ""
-         echo "   ""["${channel_names[$channel]}"]" 
-         echo "   ""URL: [${channels[$channel]}]"
-         echo "   ""Directory: ["${channel_dirs[$channel]}"]"  
          exit
       fi
    done
@@ -131,14 +127,15 @@ done
 
 # Funtion for listing channels
 function list_channels() {
+   if [ -z ${channels[1]} ]; then
+      echo "There are no channels/playlists currently added."
+      exit
+   else
    for ((i=0; i<${#channels[@]}; i++)); do
       echo $(expr $i + 1).  "["${channel_names[$i]}"]" 
       echo "   ""URL: [${channels[$i]}]"
       echo "   ""Directory: ["${channel_dirs[$i]}"]"
    done
-   if [ -z ${channels[1]} ]; then
-      echo "There are no channels/playlists currently added."
-      exit
    fi
 }
 
