@@ -66,6 +66,16 @@ function add_channel() {
       echo "Usage: auto-ytdlp -a URL SaveDirectory Name of the channel"
       exit
    fi
+   for channel in "${channels[@]}"; do
+      if [[ "$channel" == "$first" ]]; then
+         echo "Channel $first already exists."
+         echo ""
+         echo "   ""["${channel_names[$channel]}"]" 
+         echo "   ""URL: [${channels[$channel]}]"
+         echo "   ""Directory: ["${channel_dirs[$channel]}"]"  
+         exit
+      fi
+   done
    if [ ! -d $second ]; then
       echo "Warning directory $second does not exist"
       echo "Creating directory: $second"
@@ -128,6 +138,7 @@ function list_channels() {
    done
    if [ -z ${channels[@]} ]; then
       echo "There are no channels/playlists currently added."
+      exit
    fi
 }
 
