@@ -44,6 +44,7 @@ function helpmenu() {
    echo "    " "-l""                                         List all currently added channels."
    echo "    " "-a URL SaveDirectory Name of the channel""   Add a channel or playlist."
    echo "    " "-d <number>""                                Delete a channel. Get the number from list."
+   echo "    " "-u <number>""                                Change how far back, in days, the script looks for new videos. Default is 5 days."
 }
 
 # Function for adding new channels/playlists
@@ -129,9 +130,13 @@ function list_channels() {
    fi
 }
 
+function change_days() {
+   new_days=$(echo $args | awk -v var="$args" '{print $2}' )
+   sed -i "s/download_days=.*/download_days=$new_days/" config
+}
 
 if [ -n "$1" ]; then
-      if [ $1 = --help ]; then
+      if [ $1 = --help ] || [ $1 = -help ] || [ $1 = -h ]; then
          helpmenu
          exit
       fi
@@ -145,6 +150,10 @@ if [ -n "$1" ]; then
       fi
       if [ $1 = "-l" ] || [ $1 = "list" ]; then
          list_channels
+         exit
+      fi
+      if [ $1 = "-u" ]; then
+         change_days
          exit
       fi
       if [ $1 = "-v" ]; then
