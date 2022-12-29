@@ -1,13 +1,14 @@
 ## auto-ytdlp
 
 This is an auto downloader script for multiple youtube channels or playlists.
+You can track and automatically download content from creators that you want to follow.
 
-When run, by default it will check for any videos you have not already downloaded within the last five days and download them for you in the directories you specify. Each playlist or Channel will have it's own directories.
+When run, by default it will check for any videos you have not already downloaded within the last five days and download them for you in the directories you specify. Each playlist or Channel will have it's own directories, which you can specify.
 
 I am uploading this for my own benefit, you are free to use and modify it as you see fit.
 I may eventually make this more user friendly.
 
-Currently, it is likely easy to break but I will be updating this to make it more userfriendly and error out if unexpected values are used. In the meantime, just be careful when inputing commands.
+I have recently made it harder to break the application by fixing bugs. If you find any bugs or think of ways this can be improved, Please don't hesistate to raise an issue.
 
 ## Directions
 
