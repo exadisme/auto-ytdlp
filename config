@@ -12,7 +12,7 @@ download_days=5
 # 10 is a safe number.
 # Will not affect videos you have already downloadedyy
 
-playlist_end=10
+playlist_end=
 
 
 # If you want to use ffmpeg to convert the video to another format

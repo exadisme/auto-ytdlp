@@ -44,7 +44,8 @@ function helpmenu() {
    echo "    " "-l""                                         List all currently added channels."
    echo "    " "-a URL SaveDirectory Name of the channel""   Add a channel or playlist."
    echo "    " "-d <number>""                                Delete a channel. Get the number from list."
-   echo "    " "-u <number>""                                Change how far back, in days, the script looks for new videos. Default is 5 days."
+   echo "    " "-u <number>""                                Change how far back, in days, the script looks for new videos. Default is 5 days back."
+   echo "    " "-p <number>""                                Change how many videos in the playlist yt-dlp will check the dates of. Higher value can increase the time it takes to fetch videos, Lower values may cause you to miss videos if content is uploaded often. Default is 10."
 }
 
 # Function for adding new channels/playlists
@@ -132,7 +133,24 @@ function list_channels() {
 
 function change_days() {
    new_days=$(echo $args | awk -v var="$args" '{print $2}' )
+   if [ -z $new_days ]; then
+      echo "Error, no number given."
+      echo "Usage auto-ytdlp -u <number of days> ie: auto-ytdlp -u 5"
+      exit
+   fi
    sed -i "s/download_days=.*/download_days=$new_days/" config
+   echo "Auto-ytdlp will download videos from up $new_days prior."
+}
+
+function change_playlist_end() {
+   new_pl_e=$(echo $args | awk -v var="$args" '{print $2}' ) 
+   if [ -z $new_pl_e ]; then
+      echo "Error, no number given."
+      echo "Usage auto-ytdlp -p <number of videos> ie: auto-ytdlp -p 10"
+      exit
+   fi
+   sed -i "s/playlist_end=.*/playlist_end=$new_pl_e/" config
+   echo "Auto-ytdlp will check the dates of $new_pl_e video(s) in the playlist."
 }
 
 if [ -n "$1" ]; then
@@ -154,6 +172,10 @@ if [ -n "$1" ]; then
       fi
       if [ $1 = "-u" ]; then
          change_days
+         exit
+      fi
+      if [ $1 = "-p" ]; then
+         change_playlist_end
          exit
       fi
       if [ $1 = "-v" ]; then
