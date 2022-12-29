@@ -136,7 +136,7 @@ function list_channels() {
       echo "   ""URL: [${channels[$i]}]"
       echo "   ""Directory: ["${channel_dirs[$i]}"]"
    done
-   if [ -z ${channels[@]} ]; then
+   if [ -z ${channels[1]} ]; then
       echo "There are no channels/playlists currently added."
       exit
    fi
