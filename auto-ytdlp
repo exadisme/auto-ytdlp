@@ -121,7 +121,7 @@ function del_channel() {
             break
          fi
       echo "Invalid response. Please enter yes or no. "
-done
+      done
    fi
 }
 

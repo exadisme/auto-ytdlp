@@ -27,15 +27,18 @@ Place files somewhere within your path or add the folder to your path variable. 
 
 ```
 Usage:
-     auto-ytdlp                               Will check for youtube video updates and download them.
+     auto-ytdlp                                 Will check for youtube video updates and download them.
      auto-ytdlp [options]
 
 Options:
-     --help                                    Shows this menu.
-     -l                                        List all currently added channels.
-     -a URL SaveDirectory Name of the channel  Add a channel or playlist.
-     -d <number>                               Delete a channel. Get the number from list.
+     --help                                     Shows this menu.
+     -l                                         List all currently added channels.
+     -a URL SaveDirectory Name of the channel   Add a channel or playlist.
+     -d <number>                                Delete a channel. Get the number from list.
+     -u <number>                                Change how far back, in days, the script looks for new videos. Default is 5 days back.
+     -p <number>                                Change how many videos in the playlist yt-dlp will check the dates of. Higher value can increase the time it takes to fetch videos, Lower values may cause you to miss videos if content is uploaded often. Default is 10.
 ```
+
 ## Running as a service systemd
 
 If you wanted to set this up as a service you could create a systemd service with the following options:
