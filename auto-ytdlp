@@ -124,6 +124,9 @@ function list_channels() {
       echo "   ""URL: [${channels[$i]}]"
       echo "   ""Directory: ["${channel_dirs[$i]}"]"
    done
+   if [ -z ${channels[@]} ]; then
+      echo "There are no channels/playlists currently added."
+   fi
 }
 
 
@@ -132,15 +135,15 @@ if [ -n "$1" ]; then
          helpmenu
          exit
       fi
-      if [ $1 = "-a" ]; then
+      if [ $1 = "-a" ] || [ $1 = "add" ]; then
          add_channel
          exit
       fi
-      if [ $1 = "-d" ]; then
+      if [ $1 = "-d" ] || [ $1 = "del" ]; then
          del_channel
          exit
       fi
-      if [ $1 = "-l" ]; then
+      if [ $1 = "-l" ] || [ $1 = "list" ]; then
          list_channels
          exit
       fi
