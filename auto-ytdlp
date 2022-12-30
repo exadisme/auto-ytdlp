@@ -18,6 +18,12 @@ let download_date="$(date -d  "$download_days days ago" '+%Y%m%d')"
 # Capture arguments
 declare -g -a args=${@:1}
 export args
+declare -g -a first=$(echo $args | awk -v var="$args" '{print $2}' )
+export first
+declare -g -a second=$(echo $args | awk -v var="$args" '{print $3}' )
+export second
+declare -g -a third=$(echo $args | cut -d' ' -f4-)
+export third
 
 # Getting the original amount of files in each directory and populating
 # the array with the number for each.
@@ -27,7 +33,6 @@ dir_size_orig=(
 for ((i=0; i<${#channels[@]}; i++)); do
    dir_size_orig[$i]=$(ls -l ${channel_dirs[$i]} | grep -c '^-')
 done
-
 
 # Directory size change.
 dir_size_diff=(
@@ -46,13 +51,27 @@ function helpmenu() {
    echo "    " "-d <number>""                                Delete a channel. Get the number from list."
    echo "    " "-u <number>""                                Change how far back, in days, the script looks for new videos. Default is 5 days back."
    echo "    " "-p <number>""                                Change how many videos in the playlist yt-dlp will check the dates of. Higher value can increase the time it takes to fetch videos, Lower values may cause you to miss videos if content is uploaded often. Default is 10."
+exit
+}
+
+function check_null {
+   if [ -z $first ]; then
+      echo "Error: no input given."
+      echo ""
+      helpmenu
+   fi
+}
+
+function check_num {
+   numb=8
+   re='^[0-'$numb']+$'
+   if ! [[ $first =~ $re ]] ; then
+      echo "Error: $first is not a valid number" >&2; exit 1
+   fi
 }
 
 # Function for adding new channels/playlists
 function add_channel() {
-   first=$(echo $args | awk -v var="$args" '{print $2}' )
-   second=$(echo $args | awk -v var="$args" '{print $3}' )
-   third=$(echo $args | cut -d' ' -f4-)
    if [ -z $first ]; then
       echo "Error: a URL is required"
       echo "Usage: auto-ytdlp -a URL SaveDirectory Name of the channel"
@@ -84,15 +103,12 @@ function add_channel() {
 
 # function for deleting channels
 function del_channel() {
-   delnum=$(echo $args | awk -v var="$args" '{print $2}')
+   delnum=$first
    any_chans=$(wc -l channel_names | awk '{print $1}')
    limit=$(expr $any_chans - 2)
-   numb=8
-   re='^[0-'$numb']+$'
-   if ! [[ $delnum =~ $re ]] ; then
-      echo "Error: $delnum is not a number" >&2; exit 1
-   elif [ $any_chans -le 5 ];
-   then
+   check_null
+   check_num
+   if [ $any_chans -le 5 ]; then
       echo "Error: no channels to delete"
    elif [ $delnum -le 0 ]; then
       echo "Error: not a valid option. List options with -l"
@@ -136,29 +152,24 @@ function list_channels() {
       echo "   ""URL: [${channels[$i]}]"
       echo "   ""Directory: ["${channel_dirs[$i]}"]"
    done
+   exit
    fi
 }
 
 function change_days() {
-   new_days=$(echo $args | awk -v var="$args" '{print $2}' )
-   if [ -z $new_days ]; then
-      echo "Error, no number given."
-      echo "Usage auto-ytdlp -u <number of days> ie: auto-ytdlp -u 5"
-      exit
-   fi
-   sed -i "s/download_days=.*/download_days=$new_days/" config
-   echo "Auto-ytdlp will download videos from up $new_days prior."
+   check_null
+   check_num
+   sed -i "s/download_days=.*/download_days=$first/" config
+   echo "Auto-ytdlp will download videos from up $first prior."
+   exit
 }
 
 function change_playlist_end() {
-   new_pl_e=$(echo $args | awk -v var="$args" '{print $2}' ) 
-   if [ -z $new_pl_e ]; then
-      echo "Error, no number given."
-      echo "Usage auto-ytdlp -p <number of videos> ie: auto-ytdlp -p 10"
-      exit
-   fi
-   sed -i "s/playlist_end=.*/playlist_end=$new_pl_e/" config
-   echo "Auto-ytdlp will check the dates of $new_pl_e video(s) in the playlist."
+   check_null
+   check_num
+   sed -i "s/playlist_end=.*/playlist_end=$first/" config
+   echo "Auto-ytdlp will check the dates of $first video(s) in the playlist."
+   exit
 }
 
 if [ -n "$1" ]; then
