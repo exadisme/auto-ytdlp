@@ -41,16 +41,16 @@ dir_size_diff=(
 # Funtion that displays the help menu.
 function helpmenu() {
    echo Usage: 
-   echo "    " "auto-ytdlp""                                 Will check for youtube video updates and download them."
+   echo "    " "auto-ytdlp""                                       Will check for youtube video updates and download them."
    echo "    " "auto-ytdlp [options]"
    echo ""
    echo "Options:"
-   echo "    " "--help""                                     Shows this menu."
-   echo "    " "-l""                                         List all currently added channels."
-   echo "    " "-a URL SaveDirectory Name of the channel""   Add a channel or playlist."
-   echo "    " "-d <number>""                                Delete a channel. Get the number from list."
-   echo "    " "-u <number>""                                Change how far back, in days, the script looks for new videos. Default is 5 days back."
-   echo "    " "-p <number>""                                Change how many videos in the playlist yt-dlp will check the dates of. Higher value can increase the time it takes to fetch videos, Lower values may cause you to miss videos if content is uploaded often. Default is 10."
+   echo "    " "--help""                                           Shows this menu."
+   echo "    " "-l""                                               List all currently added channels."
+   echo "    " "-a <URL> <SaveDirectory> <Name of the channel>""   Add a channel or playlist."
+   echo "    " "-d <number>""                                      Delete a channel. Get the number from list."
+   echo "    " "-u <number>""                                      Change how far back, in days, the script looks for new videos. Default is 5 days back."
+   echo "    " "-p <number>""                                      Change how many videos in the playlist yt-dlp will check the dates of. Higher value can increase the time it takes to fetch videos, Lower values may cause you to miss videos if content is uploaded often. Default is 10."
 exit
 }
 
@@ -74,15 +74,15 @@ function check_num {
 function add_channel() {
    if [ -z $first ]; then
       echo "Error: a URL is required"
-      echo "Usage: auto-ytdlp -a URL SaveDirectory Name of the channel"
+      echo "Usage: auto-ytdlp -a <URL> <SaveDirectory> <Name of the channel>"
       exit
    elif [ -z $second ]; then
       echo "Error: a directory is required"
-      echo "Usage: auto-ytdlp -a URL SaveDirectory Name of the channel"
+      echo "Usage: auto-ytdlp -a <URL> <SaveDirectory> <Name of the channel>"
       exit
       elif [[ -z "${third%% *}" ]]; then
       echo "Error: a name is required"
-      echo "Usage: auto-ytdlp -a URL SaveDirectory Name of the channel"
+      echo "Usage: auto-ytdlp -a <URL> <SaveDirectory> <Name of the channel>"
       exit
    fi
    for channel in "${channels[@]}"; do
