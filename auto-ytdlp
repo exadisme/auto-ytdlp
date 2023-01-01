@@ -205,7 +205,9 @@ if [ -n "$1" ]; then
 fi
 
 # Letting you know it's running so you don't wonder why your internet is being used.
+if [[ -f /usr/bin/notify-send ]]; then
 notify-send --expire-time=10000 "Youtube Auto Download" "Checking for new videos.\nIf new episodes are downloaded, you will be notified."
+fi
 
 # Records the number of files in echo directory prior to downloading.
 
@@ -216,7 +218,7 @@ for ((i=0; i<${#channels[@]}; i++)); do
    cd ${channel_dirs[$i]}
    yt-dlp --geo-bypass --download-archive .archive --dateafter $download_date ${channels[$i]} --playlist-end $playlist_end 
    dir_size_diff[$i]=$(expr $(ls -l ${channel_dirs[$i]} | grep -c '^-') - ${dir_size_orig[$i]})
-   if [[ ${dir_size_diff[$i]} -gt 0 ]]; then
+   if [[ ${dir_size_diff[$i]} -gt 0 ]] && [[ -f /usr/bin/notify-send ]]; then
       notify-send --expire-time=20000 "${channel_names[$i]}" "${dir_size_diff[$i]} episodes downloaded"
    fi
 done
